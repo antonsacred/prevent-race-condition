@@ -1,4 +1,4 @@
-name: CI-php-8.1
+name: CI-php-8.0
 
 on: [push]
 
@@ -19,6 +19,7 @@ jobs:
           bootstrap: vendor/autoload.php
           php_version: "8.1"
           configuration: phpunit.xml
+          php_extensions: xdebug
 
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v3
