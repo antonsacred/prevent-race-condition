@@ -11,14 +11,13 @@ jobs:
 
       - uses: php-actions/composer@v6
 
-      - name: Xdebug Action
-        uses: MilesChou/docker-xdebug@8.0
 
       - name: PHPUnit Tests
         uses: php-actions/phpunit@v3
+        env:
+          XDEBUG_MODE: coverage
         with:
           bootstrap: vendor/autoload.php
-          args: --coverage-clover coverage.xml
           php_version: "8.0"
           configuration: phpunit.xml
 
