@@ -3,6 +3,10 @@
 
 This package allows you to lock some part of code to prevent race condition.
 
+### Install
+
+    composer require sacred/prevent-race-condition
+
 ### Basic usage
 
 You need PSR-6 or PSR-16 cache to use this
