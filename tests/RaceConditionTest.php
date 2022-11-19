@@ -1,22 +1,31 @@
 <?php
 
+namespace tests;
+
+use Exception;
+use PHPUnit\Framework\TestCase;
+use PreventRaceCondition\RaceCondition;
+use Symfony\Component\Cache\Adapter\FilesystemAdapter;
+use Symfony\Component\Cache\Psr16Cache;
 
 class RaceConditionTest extends TestCase
 {
   
-    public function getCache(){
-      return null;
+    public function getPSR16Cache(): Psr16Cache
+    {
+        $psr6Cache = new FilesystemAdapter();
+        return new Psr16Cache($psr6Cache);
     }
     /**
      * @throws Exception
      */
     public function testShouldHoldAndReturnBusy(): void
     {
-        $raceCondition = new RaceCondition($this->getCache());
+        $raceCondition = new RaceCondition($this->getPSR16Cache());
 
         $someName = 'name' . random_int(0, 1000000);
 
-        $raceCondition->hold($someName);
+        $raceCondition->lock($someName);
 
         $this->assertTrue($raceCondition->isBusy($someName));
 
@@ -25,9 +34,12 @@ class RaceConditionTest extends TestCase
         $this->assertFalse($raceCondition->isBusy($someName));
     }
 
+    /**
+     * @throws Exception
+     */
     public function testShouldReturnNotBusy(): void
     {
-        $raceCondition = new RaceCondition($this->getContainer()->get(Cache::class));
+        $raceCondition = new RaceCondition($this->getPSR16Cache());
 
         $someName = 'name' . random_int(0, 1000000);
 
@@ -39,40 +51,38 @@ class RaceConditionTest extends TestCase
      */
     public function testShouldHoldAndReturnNotBusyAfterTime(): void
     {
-        $raceCondition = new RaceCondition($this->getCache());
+        $raceCondition = new RaceCondition($this->getPSR16Cache());
 
         $someName = 'name' . random_int(0, 1000000);
         $time = 1;
 
         $raceCondition->setMaxTime($time);
-        $raceCondition->hold($someName);
+        $raceCondition->lock($someName);
 
         $this->assertTrue($raceCondition->isBusy($someName));
 
-        $sleepTime = (int)(1.1 * 10 ** 6);
+        $sleepTime = (int)(1.1 * 10 ** 6); // 1.1 second
         usleep($sleepTime);
 
         $this->assertFalse($raceCondition->isBusy($someName));
     }
 
     /**
-     * @throws DependencyException
-     * @throws NotFoundException
      * @throws Exception
      */
     public function testChangeNamespace(): void
     {
-        $raceCondition = new RaceCondition($this->getCache());
+        $raceCondition = new RaceCondition($this->getPSR16Cache());
 
         $someName = 'name' . random_int(0, 1000000);
-        $someNameSpace = 'namespace' . random_int(0, 10000);
+        $somePrefix = 'namespace' . random_int(0, 10000);
 
-        $raceCondition->setNamespace($someNameSpace);
-        $raceCondition->hold($someName);
+        $raceCondition->setPrefix($somePrefix);
+        $raceCondition->lock($someName);
 
         $this->assertTrue($raceCondition->isBusy($someName));
 
-        $raceCondition->setNamespace('other_namespace');
+        $raceCondition->setPrefix('other_prefix');
 
         $this->assertFalse($raceCondition->isBusy($someName));
     }

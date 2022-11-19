@@ -1,0 +1,25 @@
+{
+  "require": {
+    "php": "^8.0",
+    "psr/simple-cache" : "^2.0|^3.0",
+    "psr/cache" : "^2.0|^3.0"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^9.5",
+    "symfony/cache": "^6.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "PreventRaceCondition\\": [
+        "src/"
+      ]
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "tests\\": [
+        "tests/"
+      ]
+    }
+  }
+}

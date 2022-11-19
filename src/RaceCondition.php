@@ -1,28 +1,30 @@
 <?php
 declare(strict_types=1);
 
-// todo: set cache interface
+namespace PreventRaceCondition;
+
+use Psr\SimpleCache\CacheInterface;
 
 class RaceCondition
 {
 
-    private $cache;
-    private $namespace = '_';
-    private $maxTime = 5 * 60;
+    private CacheInterface $cache;
+    private string $prefix = 'prevent_race_cond_';
+    private int $maxTime = 5 * 60;  // 5 minutes
 
-    public function __construct($cache)
+    public function __construct(CacheInterface $cache)
     {
         $this->cache = $cache;
     }
 
     public function isBusy(string $name): bool
     {
-        return $this->cache->contains($this->getCacheName($name));
+        return $this->cache->has($this->getCacheName($name));
     }
 
-    public function hold(string $name): void
+    public function lock(string $name): void
     {
-        $this->cache->save($this->getCacheName($name), '1', $this->maxTime);
+        $this->cache->set($this->getCacheName($name), '1', $this->maxTime);
     }
 
     public function release(string $name): void
@@ -30,9 +32,9 @@ class RaceCondition
         $this->cache->delete($this->getCacheName($name));
     }
 
-    public function setNamespace(string $namespace): void
+    public function setPrefix(string $prefix): void
     {
-        $this->namespace = $namespace;
+        $this->prefix = $prefix;
     }
 
     public function setMaxTime(int $seconds): void
@@ -42,7 +44,7 @@ class RaceCondition
 
     private function getCacheName(string $name): string
     {
-        return $this->namespace . $name;
+        return $this->prefix . $name;
     }
 
 }
