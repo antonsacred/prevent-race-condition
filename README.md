@@ -4,21 +4,25 @@
 
 You need PSR-6 or PSR-16 cache to use this
 
-    // $somePSR16Cache is PSR16 any cache instance 
-    $raceCondition = RaceConditionFactory::fromCacheItemPool($somePSR16Cache);
+```php
+use PreventRaceCondition\RaceConditionFactory;
 
-    // or
+// $somePSR16Cache is PSR16 any cache instance 
+$raceCondition = RaceConditionFactory::fromCacheItemPool($somePSR16Cache);
 
-    // $somePSR6Cache is PSR6 any cache instance 
-    $raceCondition = RaceConditionFactory::fromSimpleCache($somePSR6Cache);
+// or
+
+// $somePSR6Cache is PSR6 any cache instance 
+$raceCondition = RaceConditionFactory::fromSimpleCache($somePSR6Cache);
 
 
-    while($raceCondition->isBusy('lock-name')) {
-        // wait or do something else
-    }
+while($raceCondition->isBusy('lock-name')) {
+    // wait or do something else
+}
 
-    $raceCondition->lock('lock-name');
+$raceCondition->lock('lock-name');
 
-    // do something
+// do something
 
-    $raceCondition->release('lock-name');
+$raceCondition->release('lock-name');
+```
