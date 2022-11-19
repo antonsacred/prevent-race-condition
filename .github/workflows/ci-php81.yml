@@ -1,4 +1,4 @@
-name: CI-php-8.0
+name: CI-php-8.1
 
 on: [push]
 
