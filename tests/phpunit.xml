@@ -1,5 +1,5 @@
 <testsuites>
     <testsuite name="all">
-        <directory>tests</directory>
+        <directory>/</directory>
     </testsuite>
 </testsuites>
