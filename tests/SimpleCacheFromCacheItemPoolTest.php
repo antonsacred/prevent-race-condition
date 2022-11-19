@@ -8,7 +8,7 @@ use PHPUnit\Framework\TestCase;
 use Psr\Cache\InvalidArgumentException;
 use Symfony\Component\Cache\Adapter\FilesystemAdapter;
 
-class SimpleCacheFromCacheTest extends TestCase
+class SimpleCacheFromCacheItemPoolTest extends TestCase
 {
 
     private function getCache(): SimpleCacheFromCacheItemPool
