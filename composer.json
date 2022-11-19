@@ -1,5 +1,5 @@
 {
-  "name": "antonsacred/prevent-race-condition",
+  "name": "sacred/prevent-race-condition",
   "description": "This package allows you to lock some part of code to prevent race condition.",
   "keywords": ["race condition","prevent", "lock"],
   "license": "MIT",
