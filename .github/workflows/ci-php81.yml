@@ -13,9 +13,8 @@ jobs:
 
       - name: PHPUnit Tests
         uses: php-actions/phpunit@v3
-        env:
-          TEST_NAME: Scarlett
         with:
           bootstrap: vendor/autoload.php
           args: --coverage-text
           php_version: "8.1"
+          configuration: tests/phpunit.xml
