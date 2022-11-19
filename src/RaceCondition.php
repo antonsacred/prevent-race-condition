@@ -5,7 +5,7 @@ namespace PreventRaceCondition;
 
 use Psr\SimpleCache\CacheInterface;
 
-class RaceCondition
+class RaceCondition implements RaceConditionInterface
 {
 
     private CacheInterface $cache;
