@@ -11,6 +11,9 @@ jobs:
 
       - uses: php-actions/composer@v6
 
+      - name: Xdebug Action
+        uses: MilesChou/docker-xdebug@8.0
+
       - name: PHPUnit Tests
         uses: php-actions/phpunit@v3
         with:
@@ -21,4 +24,3 @@ jobs:
 
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v3
-        files: ./coverage.xml
