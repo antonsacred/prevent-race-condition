@@ -3,7 +3,7 @@
   "description": "This package allows you to lock some part of code to prevent race condition.",
   "keywords": ["race condition","prevent", "lock"],
   "license": "MIT",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "require": {
     "php": "^8.0",
     "psr/simple-cache": "^2.0|^3.0",
