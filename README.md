@@ -1,5 +1,5 @@
 # Prevent Race Condition
-
+[![codecov](https://codecov.io/gh/antonsacred/matrix-determinant/branch/master/graph/badge.svg?token=C10CHOFXWE)](https://codecov.io/gh/antonsacred/prevent-race-condition)
 ### Basic usage
 
 You need PSR-6 or PSR-16 cache to use this
